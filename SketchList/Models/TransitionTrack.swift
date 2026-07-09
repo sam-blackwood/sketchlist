@@ -33,11 +33,17 @@ final class TransitionTrack {
 
     // MARK: Relationships
 
+    // Optional (required in practice): during a cascade delete SwiftData invalidates
+    // the deleted child's relationships, and reading a non-optional to-one afterward
+    // logs "read after invalidation" and can crash an observing SwiftUI view. Optional
+    // lets those post-deletion reads resolve to nil. The schema's NOT NULL intent is
+    // enforced by the init, which requires both endpoints.
+
     /// The owning transition. Inverse of `Transition.transitionTracks`.
-    var transition: Transition
+    var transition: Transition?
 
     /// The track placed at this position.
-    var track: Track
+    var track: Track?
 
     // MARK: Init
 

@@ -60,24 +60,28 @@ final class Track {
 
     // MARK: Relationships
 
-    /// Artist credits for this track. Deleting a Track cascades to its junction
+    // Every join cascades from BOTH parents, matching the schema's `ON DELETE
+    // CASCADE` on both foreign keys: deleting a Track removes its rows in every
+    // join, and deleting a container (Setlist/Playlist/Transition) or an Artist
+    // removes its rows too. SwiftData handles a join with two cascade owners fine
+    // (an earlier belief otherwise turned out to be a test-harness bug — see
+    // ModelStoreTests). The junctions' to-one relationships are kept optional, which
+    // SwiftData requires for the child side of a cascade delete.
+
+    /// Artist credits for this track. Deleting a Track cascades to its `TrackArtist`
     /// rows (not to the Artists).
     @Relationship(deleteRule: .cascade, inverse: \TrackArtist.track)
     var trackArtists: [TrackArtist] = []
 
-    /// Join rows placing this track in setlists. Cascade mirrors the schema's
-    /// `SetlistTracks.track_id ON DELETE CASCADE` — deleting a Track removes the
-    /// join rows that reference it (not the Setlists themselves).
+    /// Setlist placements referencing this track. Deleting a Track cascades to these.
     @Relationship(deleteRule: .cascade, inverse: \SetlistTrack.track)
     var setlistTracks: [SetlistTrack] = []
 
-    /// Join rows placing this track in playlists. Cascade mirrors the schema's
-    /// `PlaylistTracks.track_id ON DELETE CASCADE`.
+    /// Playlist memberships referencing this track. Deleting a Track cascades to these.
     @Relationship(deleteRule: .cascade, inverse: \PlaylistTrack.track)
     var playlistTracks: [PlaylistTrack] = []
 
-    /// Join rows placing this track in transitions. Cascade mirrors the schema's
-    /// `TransitionTracks.track_id ON DELETE CASCADE`.
+    /// Transition placements referencing this track. Deleting a Track cascades to these.
     @Relationship(deleteRule: .cascade, inverse: \TransitionTrack.track)
     var transitionTracks: [TransitionTrack] = []
 

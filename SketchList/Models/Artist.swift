@@ -37,7 +37,9 @@ final class Artist {
     // MARK: Relationships
 
     /// Junction rows linking this artist to the tracks they're credited on.
-    /// Deleting an Artist cascades to its junction rows (not to the Tracks).
+    /// Deleting an Artist cascades to its `TrackArtist` rows (not to the Tracks).
+    /// Both parents (Track and Artist) cascade into `TrackArtist`, matching the
+    /// schema's `ON DELETE CASCADE` on both foreign keys.
     @Relationship(deleteRule: .cascade, inverse: \TrackArtist.artist)
     var trackArtists: [TrackArtist] = []
 

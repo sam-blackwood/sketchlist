@@ -28,11 +28,17 @@ final class TrackArtist {
 
     // MARK: Relationships
 
+    // Optional (required in practice): during a cascade delete SwiftData invalidates
+    // the deleted child's relationships, and reading a non-optional to-one afterward
+    // logs "read after invalidation" and can crash an observing SwiftUI view. Optional
+    // lets those post-deletion reads resolve to nil. The schema's NOT NULL intent is
+    // enforced by the init, which requires both endpoints.
+
     /// The track side of the credit. Inverse of `Track.trackArtists`.
-    var track: Track
+    var track: Track?
 
     /// The artist side of the credit. Inverse of `Artist.trackArtists`.
-    var artist: Artist
+    var artist: Artist?
 
     // MARK: Init
 
