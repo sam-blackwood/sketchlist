@@ -1,2 +1,5 @@
 SYSTEM_DESIGN.md
 UI_DESIGN.md
+
+# Local-only scratch tooling (realistic sample library + eyeball tests); not shipped
+SketchListTests/Scratch/
