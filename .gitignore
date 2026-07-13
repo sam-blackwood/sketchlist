@@ -1,5 +1,29 @@
+# ── Project docs (kept local, not committed) ──
 SYSTEM_DESIGN.md
 UI_DESIGN.md
 
-# Local-only scratch tooling (realistic sample library + eyeball tests); not shipped
+# ── Local-only scratch tooling (realistic sample library + eyeball tests); not shipped ──
 SketchListTests/Scratch/
+
+# ── macOS ──
+.DS_Store
+
+# ── Xcode: per-user state (breakpoints, window layout, selected scheme, …) ──
+# Note: xcshareddata/ (shared schemes) is intentionally NOT ignored.
+xcuserdata/
+*.xcuserstate
+
+# ── Xcode: build output ──
+build/
+DerivedData/
+
+# ── Build artifacts ──
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# ── Swift Package Manager ──
+.build/
+.swiftpm/
