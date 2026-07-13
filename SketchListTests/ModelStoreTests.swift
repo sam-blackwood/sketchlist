@@ -6,17 +6,16 @@
 //
 
 import Foundation
-import Testing
-import SwiftData
 @testable import SketchList
+import SwiftData
+import Testing
 
-@MainActor  // mainContext is main-actor isolated, so the tests must run there.
+@MainActor // mainContext is main-actor isolated, so the tests must run there.
 struct ModelStoreTests {
-
-    // Retain the container for the whole test. Grabbing `.mainContext` off a
-    // throwaway `ModelContainer(...)` lets the container deallocate out from under
-    // the context, which then traps on the next operation with no Swift error.
-    // A stored property gives each test instance its own fresh, retained store.
+    /// Retain the container for the whole test. Grabbing `.mainContext` off a
+    /// throwaway `ModelContainer(...)` lets the container deallocate out from under
+    /// the context, which then traps on the next operation with no Swift error.
+    /// A stored property gives each test instance its own fresh, retained store.
     let container: ModelContainer
 
     init() throws {

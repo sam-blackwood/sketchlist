@@ -17,7 +17,6 @@ import SwiftData
 /// junction, keeping the many-to-many relationship normalized.
 @Model
 final class Artist {
-
     // MARK: Identity
 
     /// Domain identifier. Plain UUID, no `.unique` constraint — see Track for the

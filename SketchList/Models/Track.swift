@@ -16,7 +16,6 @@ import SwiftData
 /// setlists / playlists / transitions is held by their respective join models.
 @Model
 final class Track {
-
     // MARK: Identity
 
     /// Domain identifier. A generated UUID is effectively unique on its own, so
@@ -123,25 +122,31 @@ final class Track {
 /// Note: defined here for convenience while scaffolding. Once more of the model
 /// layer exists, this is a natural candidate to move into its own file.
 enum CamelotKey: String, Codable, CaseIterable, Identifiable {
-    case k1A = "1A",  k2A = "2A",  k3A = "3A",  k4A = "4A"
-    case k5A = "5A",  k6A = "6A",  k7A = "7A",  k8A = "8A"
-    case k9A = "9A",  k10A = "10A", k11A = "11A", k12A = "12A"
-    case k1B = "1B",  k2B = "2B",  k3B = "3B",  k4B = "4B"
-    case k5B = "5B",  k6B = "6B",  k7B = "7B",  k8B = "8B"
-    case k9B = "9B",  k10B = "10B", k11B = "11B", k12B = "12B"
+    case k1A = "1A", k2A = "2A", k3A = "3A", k4A = "4A"
+    case k5A = "5A", k6A = "6A", k7A = "7A", k8A = "8A"
+    case k9A = "9A", k10A = "10A", k11A = "11A", k12A = "12A"
+    case k1B = "1B", k2B = "2B", k3B = "3B", k4B = "4B"
+    case k5B = "5B", k6B = "6B", k7B = "7B", k8B = "8B"
+    case k9B = "9B", k10B = "10B", k11B = "11B", k12B = "12B"
 
-    var id: String { rawValue }
+    var id: String {
+        rawValue
+    }
 
     /// The wheel number, 1–12.
-    var number: Int { Int(rawValue.dropLast())! }
+    var number: Int {
+        Int(rawValue.dropLast())!
+    }
 
     /// `true` for the A (minor) side, `false` for B (major).
-    var isMinor: Bool { rawValue.hasSuffix("A") }
-    
+    var isMinor: Bool {
+        rawValue.hasSuffix("A")
+    }
+
     static func isCompatible(key1: CamelotKey, key2: CamelotKey) -> Bool {
         let camelotDiff = abs(key1.number - key2.number)
         let sameMajorMinor = key1.rawValue.last == key2.rawValue.last
-        
+
         // camelotDiff of 11 means keys wrap at 12 and 1
         return (camelotDiff == 0) || ((camelotDiff == 1 || camelotDiff == 11) && sameMajorMinor)
     }

@@ -9,7 +9,6 @@ import Foundation
 @testable import SketchList
 
 enum TestSupport {
-
     /// Prints a list of tracks with their key and BPM, bracketed by a labeled
     /// header/footer. Handy for eyeballing recommendation output in scratch tests.
     ///

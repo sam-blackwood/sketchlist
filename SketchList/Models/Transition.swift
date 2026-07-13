@@ -18,7 +18,6 @@ import SwiftData
 /// identity and descriptive metadata. A transition may be as short as one track.
 @Model
 final class Transition {
-
     // MARK: Identity
 
     /// Domain identifier. Plain UUID, no `.unique` constraint — see Track for the

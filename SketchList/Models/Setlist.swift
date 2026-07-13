@@ -17,7 +17,6 @@ import SwiftData
 /// only the setlist's identity and descriptive metadata.
 @Model
 final class Setlist {
-
     // MARK: Identity
 
     /// Domain identifier. Plain UUID, no `.unique` constraint — see Track for the

@@ -11,7 +11,7 @@ import SwiftUI
 @main
 struct SketchListApp: App {
     let modelContainer: ModelContainer
-    
+
     init() {
         do {
             modelContainer = try .app()
@@ -19,7 +19,7 @@ struct SketchListApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }
-    
+
     var body: some Scene {
         WindowGroup {
             ContentView()

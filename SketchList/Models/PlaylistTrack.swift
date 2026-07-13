@@ -19,7 +19,6 @@ import SwiftData
 /// UUID and both rules are enforced at the service layer.
 @Model
 final class PlaylistTrack {
-
     // MARK: Identity
 
     /// Synthetic identifier standing in for the schema's `(playlist_id, track_id)`
@@ -55,7 +54,7 @@ final class PlaylistTrack {
     // MARK: Init
 
     init(playlist: Playlist, track: Track, position: Int, addedAt: Date = .now) {
-        self.id = UUID()
+        id = UUID()
         self.playlist = playlist
         self.track = track
         self.position = position

@@ -19,7 +19,6 @@ import SwiftData
 /// setlist are intentionally allowed (e.g. an intro/outro reprise).
 @Model
 final class SetlistTrack {
-
     // MARK: Identity
 
     /// Synthetic identifier. Plain UUID, no `.unique` (see Track). The schema's
@@ -48,7 +47,7 @@ final class SetlistTrack {
     // MARK: Init
 
     init(setlist: Setlist, track: Track, position: Int) {
-        self.id = UUID()
+        id = UUID()
         self.setlist = setlist
         self.track = track
         self.position = position

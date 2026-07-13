@@ -18,7 +18,6 @@ import SwiftData
 /// per (track, artist)" rule is enforced at the service layer on insert.
 @Model
 final class TrackArtist {
-
     // MARK: Identity
 
     /// Synthetic identifier standing in for the schema's `(track_id, artist_id)`
@@ -43,7 +42,7 @@ final class TrackArtist {
     // MARK: Init
 
     init(track: Track, artist: Artist) {
-        self.id = UUID()
+        id = UUID()
         self.track = track
         self.artist = artist
     }

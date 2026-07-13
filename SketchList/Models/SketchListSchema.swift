@@ -12,7 +12,6 @@ import Foundation
 import SwiftData
 
 enum SketchListSchema {
-
     /// Every `@Model` type in the app. Add new models here.
     static let models: [any PersistentModel.Type] = [
         Track.self, Artist.self, TrackArtist.self,
@@ -28,7 +27,6 @@ enum SketchListSchema {
 // MARK: - ModelContainer factories
 
 extension ModelContainer {
-
     /// The app's persistent container, stored at
     /// `~/Library/Application Support/SketchList/SketchList.store`.
     static func app() throws -> ModelContainer {

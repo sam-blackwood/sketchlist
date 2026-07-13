@@ -6,7 +6,6 @@
 import Foundation
 
 final class RecommendationService {
-    
     /// Scores how closely two tempos match, on a 0...1 scale where higher is better.
     ///
     /// The comparison is **octave-equivalent**: half-time and double-time tracks count
@@ -33,16 +32,17 @@ final class RecommendationService {
         let r = bpm2 / bpm1
         let d = log2(r)
         let octaveDistance = abs(d - d.rounded())
-        let bpmScore = 1 - 2 * octaveDistance
-        return bpmScore
+        return 1 - 2 * octaveDistance
     }
-    
+
     func getRecommendationsForSingleTrack(
         sourceKey: CamelotKey,
         sourceBPM: Double,
         candidates: [Track],
         limit: Int
-    ) -> [Track] {
+    )
+        -> [Track]
+    {
         // Zip tracks and their tempoScore together
         var bestCandidates: [(track: Track, bpmScore: Double)] = []
 
@@ -61,15 +61,21 @@ final class RecommendationService {
             .prefix(limit)
             .map { $0.track }
     }
-    
-    func recommendSetlist(startSong: Track, candidates: [Track], limit: Int) -> [Track] {
-        var setlist = [startSong]
-        var currentSong = startSong
-        var remaining = candidates.filter({ $0.id != startSong.id })
 
-        for _ in 0..<limit {
+    func recommendSetlist(startSong: Track, candidates: [Track], limit: Int) -> [Track] {
+        var setlist = [startSong] // Place startSong as initial song in the setlist
+        var currentSong = startSong
+        // Remove startSong from candidates so it's not included as a recommendation
+        var remaining = candidates.filter { $0.id != startSong.id }
+
+        for _ in 0 ..< limit {
             // Algorithm hard-codes sampling from 5 best candidates for next track selection
-            let bestMatches = getRecommendationsForSingleTrack(sourceKey: currentSong.key, sourceBPM: currentSong.bpm, candidates: remaining, limit: 10)
+            let bestMatches = getRecommendationsForSingleTrack(
+                sourceKey: currentSong.key,
+                sourceBPM: currentSong.bpm,
+                candidates: remaining,
+                limit: 10
+            )
 
             guard let nextSong = bestMatches.randomElement() else { return setlist }
             // Append nextSong to setlist and remove it from the remaining tracks

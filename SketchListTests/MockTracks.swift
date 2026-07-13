@@ -11,11 +11,10 @@
 //
 
 import Foundation
-import SwiftData
 @testable import SketchList
+import SwiftData
 
 enum MockTracks {
-
     /// Builds a deterministic library: `perKey` tracks for every Camelot key, with
     /// BPMs stepping by `spacing` from `bpmRange.lowerBound` (capped at the upper bound).
     ///
@@ -34,11 +33,13 @@ enum MockTracks {
     ///   - spacing: BPM step between consecutive tracks within a key.
     static func all(
         perKey: Int = 25,
-        bpmRange: ClosedRange<Double> = 60...180,
+        bpmRange: ClosedRange<Double> = 60 ... 180,
         spacing: Double = 5
-    ) -> [Track] {
+    )
+        -> [Track]
+    {
         CamelotKey.allCases.flatMap { key in
-            (0..<perKey).map { index in
+            (0 ..< perKey).map { index in
                 let bpm = min(bpmRange.lowerBound + Double(index) * spacing, bpmRange.upperBound)
                 return Track(
                     title: "\(key.rawValue) Track \(index + 1)",
@@ -55,11 +56,15 @@ enum MockTracks {
     static func seed(
         into context: ModelContext,
         perKey: Int = 25,
-        bpmRange: ClosedRange<Double> = 60...180,
+        bpmRange: ClosedRange<Double> = 60 ... 180,
         spacing: Double = 5
-    ) throws -> [Track] {
+    )
+        throws -> [Track]
+    {
         let tracks = all(perKey: perKey, bpmRange: bpmRange, spacing: spacing)
-        for track in tracks { context.insert(track) }
+        for track in tracks {
+            context.insert(track)
+        }
         try context.save()
         return tracks
     }

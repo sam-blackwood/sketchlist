@@ -17,7 +17,6 @@ import SwiftData
 /// identity and descriptive metadata.
 @Model
 final class Playlist {
-
     // MARK: Identity
 
     /// Domain identifier. Plain UUID, no `.unique` constraint — see Track for the

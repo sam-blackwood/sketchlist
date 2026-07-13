@@ -19,7 +19,6 @@ import SwiftData
 /// intentionally allowed.
 @Model
 final class TransitionTrack {
-
     // MARK: Identity
 
     /// Synthetic identifier. Plain UUID, no `.unique` (see Track). The schema's
@@ -48,7 +47,7 @@ final class TransitionTrack {
     // MARK: Init
 
     init(transition: Transition, track: Track, position: Int) {
-        self.id = UUID()
+        id = UUID()
         self.transition = transition
         self.track = track
         self.position = position
