@@ -1,0 +1,34 @@
+# .swiftformat
+# Rules controlling when function calls and function signatures wrap.
+# Docs: https://github.com/nicklockwood/SwiftFormat/blob/main/Rules.md#wrapArguments
+
+# Wrap once a line would exceed this width. Without --max-width, wraparguments
+# only fires on lines that are already broken across multiple lines.
+--max-width 120
+
+# Function CALLS (e.g. `foo(bar: 1, baz: 2)`): once wrapping is triggered,
+# put each argument on its own line, with the first argument starting on a
+# new line after the opening paren.
+--wrap-arguments before-first
+
+# Function SIGNATURES (declarations, e.g. `func foo(bar: Int, baz: String)`):
+# same before-first behavior for parameters.
+--wrap-parameters before-first
+
+# Closing paren on declarations goes on its own line, indented to match
+# the line that opened the paren.
+--closing-paren balanced
+
+# Closing paren at call sites follows the same balanced style.
+--call-site-paren balanced
+
+# Only wrap `async`/`throws` onto their own line if the rest of the
+# signature already wrapped.
+--wrap-effects if-multiline
+
+# Only wrap the return type onto its own line if the rest of the
+# signature already wrapped.
+--wrap-return-type if-multiline
+
+# Make sure the rule that reads the options above is actually active.
+--enable wrapArguments
