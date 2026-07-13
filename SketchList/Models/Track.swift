@@ -30,9 +30,8 @@ final class Track {
 
     var title: String
 
-    /// Beats per minute. `Decimal` preserves fractional BPM (e.g. 128.5) without
-    /// binary floating-point drift.
-    var bpm: Decimal
+    /// Beats per minute, stored as`Double`.
+    var bpm: Double
 
     /// Harmonic key on the Camelot wheel. Stored as its raw `String` (e.g. "8A")
     /// so the persisted value is human-readable and stable across enum edits.
@@ -90,7 +89,7 @@ final class Track {
     init(
         id: UUID = UUID(),
         title: String,
-        bpm: Decimal,
+        bpm: Double,
         key: CamelotKey,
         genre: String? = nil,
         duration: Int,
@@ -138,4 +137,12 @@ enum CamelotKey: String, Codable, CaseIterable, Identifiable {
 
     /// `true` for the A (minor) side, `false` for B (major).
     var isMinor: Bool { rawValue.hasSuffix("A") }
+    
+    static func isCompatible(key1: CamelotKey, key2: CamelotKey) -> Bool {
+        let camelotDiff = abs(key1.number - key2.number)
+        let sameMajorMinor = key1.rawValue.last == key2.rawValue.last
+        
+        // camelotDiff of 11 means keys wrap at 12 and 1
+        return (camelotDiff == 0) || ((camelotDiff == 1 || camelotDiff == 11) && sameMajorMinor)
+    }
 }
