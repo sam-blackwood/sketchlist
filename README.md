@@ -4,7 +4,7 @@ A native macOS app for planning DJ sets. Metadata-only — organize your music l
 
 ## About
 
-SketchList is a planning tool for DJs, not a mixing tool. It doesn't play or store audio files; it works with track metadata (title, artist, BPM, key, genre) so you can browse, search, and arrange your library visually. Actual mixing happens in your existing DJ software.
+SketchList is a planning tool for DJs, not a mixing tool. It doesn't play or store audio files; it works with track metadata (title, artist, BPM, key) so you can browse, search, and arrange your library visually. Actual mixing happens in your existing DJ software.
 
 ## Status
 
