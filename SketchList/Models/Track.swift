@@ -36,9 +36,6 @@ final class Track {
     /// so the persisted value is human-readable and stable across enum edits.
     var key: CamelotKey
 
-    /// Nullable — not every track has a genre entered.
-    var genre: String?
-
     /// Track length in whole seconds.
     var duration: Int
 
@@ -90,7 +87,6 @@ final class Track {
         title: String,
         bpm: Double,
         key: CamelotKey,
-        genre: String? = nil,
         duration: Int,
         spotifyID: String? = nil,
         notes: String? = nil,
@@ -101,7 +97,6 @@ final class Track {
         self.title = title
         self.bpm = bpm
         self.key = key
-        self.genre = genre
         self.duration = duration
         self.spotifyID = spotifyID
         self.notes = notes
