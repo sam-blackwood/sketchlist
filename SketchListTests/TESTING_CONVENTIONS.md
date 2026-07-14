@@ -43,6 +43,44 @@ what a failure implies. No bare assertions.
 On failure, Swift Testing prints the comment alongside the evaluated expression, turning
 a red ✗ into a self-explaining diagnostic. This applies to `#require` as well.
 
+## Rule 3 — Group tests by functionality with `extension`s, not nested suites
+
+When a service has several methods worth grouping (e.g. `insert` / `update` / `delete`),
+keep one suite `struct` that owns the setup (container, `init`, fetch helpers) and split
+the tests into one `extension` per method. Do **not** use nested `@Suite` structs for this.
+
+```swift
+@MainActor
+struct TrackServiceTests {
+    let container: ModelContainer
+    let service: TrackService
+    init() throws { /* ... */ }
+    // shared fetch helpers here
+}
+
+// MARK: - insert
+@MainActor
+extension TrackServiceTests {
+    @Test("...") func ... { /* uses service + helpers directly */ }
+}
+
+// MARK: - update
+@MainActor
+extension TrackServiceTests { /* ... */ }
+```
+
+Why extensions:
+
+- **Foldable groups.** Each `extension` is a brace scope, so Xcode's code folding
+  collapses one group at a time (a `// MARK:` alone can't — it isn't a foldable region).
+- **Shared setup, no ceremony.** Extensions of the same type see the struct's `service`
+  and helpers directly. Nested `@Suite` structs are separate types, so each would need its
+  own container/`init`/helpers (or a shared protocol) — extra boilerplate for no gain here.
+
+Nested `@Suite`s do one thing extensions don't: create collapsible *folders in the test
+navigator*. Only reach for them if that navigator grouping is specifically what you want;
+for organizing code, prefer extensions.
+
 ## Notes
 
 - These are conventions for *tests*, not production code.
