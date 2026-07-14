@@ -17,6 +17,9 @@ import SwiftData
 /// junction, keeping the many-to-many relationship normalized.
 @Model
 final class Artist {
+
+    #Index<Artist>([\.normalizedName])
+
     // MARK: Identity
 
     /// Domain identifier. Plain UUID, no `.unique` constraint — see Track for the
@@ -25,8 +28,15 @@ final class Artist {
 
     // MARK: Core metadata
 
-    /// The artist's display name.
+    /// The artist's display name — the casing as first entered.
     var name: String
+
+    /// Lowercased, whitespace-trimmed form of `name`, used for case-insensitive dedup
+    /// and lookup. Persisted and indexed (see `#Index` above) so artist resolution is a
+    /// direct keyed fetch, not an in-memory scan. Always derived from `name` via
+    /// `normalize(_:)`; the two must stay in sync, so any future rename path must
+    /// recompute this alongside `name`.
+    var normalizedName: String
 
     // MARK: Timestamps
 
@@ -52,7 +62,18 @@ final class Artist {
     ) {
         self.id = id
         self.name = name
+        self.normalizedName = Artist.normalize(name)
         self.createdAt = createdAt
         self.updatedAt = updatedAt
+    }
+
+    /// The canonical form used for case-insensitive matching: whitespace-trimmed and
+    /// lowercased. Single source of truth for the normalization rule.
+    ///
+    /// Changing this rule requires a one-time backfill of every stored `normalizedName`
+    /// (it is not a SwiftData structural migration) — see the "Before Shipping Checklist"
+    /// in SYSTEM_DESIGN.md.
+    static func normalize(_ name: String) -> String {
+        name.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
     }
 }
