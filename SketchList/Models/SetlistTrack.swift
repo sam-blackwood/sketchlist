@@ -18,7 +18,7 @@ import SwiftData
 /// maintained at the service layer during reordering. Duplicate tracks within one
 /// setlist are intentionally allowed (e.g. an intro/outro reprise).
 @Model
-final class SetlistTrack {
+final class SetlistTrack: Positioned {
     // MARK: Identity
 
     /// Synthetic identifier. Plain UUID, no `.unique` (see Track). The schema's

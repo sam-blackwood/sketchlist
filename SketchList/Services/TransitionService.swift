@@ -88,4 +88,59 @@ final class TransitionService {
         modelContext.delete(transition)
         try modelContext.save()
     }
+
+    /// Adds `tracks` to `transition`, in order. Each track is wrapped in a `TransitionTrack`
+    /// membership row and spliced in at `index` (or appended when `index` is `nil`); all
+    /// positions are then renumbered to stay contiguous. Transitions allow the same track
+    /// more than once, so no de-duplication is performed.
+    ///
+    /// - Parameters:
+    ///   - tracks: Tracks to add, in the order they should appear.
+    ///   - transition: The transition to add them to.
+    ///   - index: Insertion point within the transition's current order; `nil` appends.
+    func addTracks(_ tracks: [Track], to transition: Transition, at index: Int? = nil) throws {
+        var rows = transition.transitionTracks.sorted { $0.position < $1.position }
+
+        let newRows = tracks.map { TransitionTrack(transition: transition, track: $0, position: 0) }
+        for row in newRows { modelContext.insert(row) }
+
+        Ordering.insert(newRows, at: index ?? rows.count, into: &rows)
+        try modelContext.save()
+    }
+
+    /// Removes the given membership rows from `transition`, then renumbers the survivors so
+    /// positions stay contiguous. Takes `TransitionTrack`s (not `Track`s) because a transition
+    /// may contain the same track more than once — the row identifies the exact occurrence to
+    /// remove. The removed rows' tracks are left untouched in the library.
+    ///
+    /// - Parameters:
+    ///   - transitionTracks: The membership rows to remove.
+    ///   - transition: The transition to remove them from.
+    func removeTracks(_ transitionTracks: [TransitionTrack], from transition: Transition) throws {
+        let removing = Set(transitionTracks.map(\.id))
+        for row in transitionTracks {
+            modelContext.delete(row)
+        }
+
+        let remaining = transition.transitionTracks
+            .filter { !removing.contains($0.id) }
+            .sorted { $0.position < $1.position }
+        Ordering.reindex(remaining)
+        try modelContext.save()
+    }
+
+    /// Moves the row at `source` to `destination` within `transition`, then renumbers so
+    /// positions stay contiguous. `destination` follows the SwiftUI `onMove` convention
+    /// (the offset to insert *before*, `0...count`). Indices are into the transition's rows
+    /// in their current position order.
+    ///
+    /// - Parameters:
+    ///   - transition: The transition whose rows are being reordered.
+    ///   - source: Index of the row to move (`0..<count`).
+    ///   - destination: Where to move it (`0...count`).
+    func moveTrack(in transition: Transition, from source: Int, to destination: Int) throws {
+        var rows = transition.transitionTracks.sorted { $0.position < $1.position }
+        Ordering.move(&rows, from: source, to: destination)
+        try modelContext.save()
+    }
 }

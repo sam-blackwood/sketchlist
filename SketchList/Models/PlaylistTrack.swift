@@ -18,7 +18,7 @@ import SwiftData
 /// SwiftData can't express either compound constraint, so identity is a synthetic
 /// UUID and both rules are enforced at the service layer.
 @Model
-final class PlaylistTrack {
+final class PlaylistTrack: Positioned {
     // MARK: Identity
 
     /// Synthetic identifier standing in for the schema's `(playlist_id, track_id)`

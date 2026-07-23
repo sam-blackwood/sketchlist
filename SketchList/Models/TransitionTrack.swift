@@ -18,7 +18,7 @@ import SwiftData
 /// valid (one row at position 0) and duplicate tracks within a transition are
 /// intentionally allowed.
 @Model
-final class TransitionTrack {
+final class TransitionTrack: Positioned {
     // MARK: Identity
 
     /// Synthetic identifier. Plain UUID, no `.unique` (see Track). The schema's
