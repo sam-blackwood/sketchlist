@@ -19,21 +19,7 @@
 import SwiftUI
 
 struct EntityIcon: View {
-    enum Kind {
-        /// Numbered list — ordering is the whole point. Stock `list.number`.
-        case setlist
-
-        /// Bulleted list — a pool, no order implied.
-        case playlist
-
-        /// Two bars staggered in time.
-        ///
-        /// Provisional. UI_DESIGN.md § Still open records that this one hasn't
-        /// landed; swapping it means editing this case and nothing else.
-        case transition
-    }
-
-    let kind: Kind
+    let kind: EntityKind
     var size: CGFloat = 26
 
     var body: some View {
@@ -69,7 +55,7 @@ private struct Bar {
     let x, y, width, height: CGFloat
 }
 
-private extension EntityIcon.Kind {
+private extension EntityKind {
     /// Non-nil when this mark is a stock symbol rather than a drawn one.
     var systemImage: String? {
         switch self {
@@ -81,9 +67,13 @@ private extension EntityIcon.Kind {
     var bars: [Bar] {
         switch self {
         case .setlist:
-            [] // drawn from a stock symbol instead
+            // Numbered list — ordering is the whole point. Stock `list.number`,
+            // so there is nothing to draw here.
+            []
 
         case .playlist:
+            // Bulleted list — a pool, no order implied. Paired with Setlist's
+            // numerals this states `<ul>` against `<ol>`.
             [
                 Bar(x: 1, y: 4, width: 4, height: 4),
                 Bar(x: 8, y: 4.75, width: 15, height: 2.5),
@@ -95,7 +85,7 @@ private extension EntityIcon.Kind {
 
         case .transition:
             // Two bars only. A third, half-opacity bar used to bridge the gap as
-            // a "blend region" — it read as a grey smudge rather than as a mix,
+            // a "blend region" — it read as a gray smudge rather than as a mix,
             // and the stagger says overlap on its own.
             [
                 Bar(x: 1, y: 6, width: 15, height: 4.5),
@@ -119,7 +109,7 @@ private extension EntityIcon.Kind {
         }
         ForEach([CGFloat(64), 26, 18, 14], id: \.self) { size in
             HStack(spacing: Metrics.Space.loose) {
-                ForEach([EntityIcon.Kind.setlist, .playlist, .transition], id: \.self) { kind in
+                ForEach([EntityKind.setlist, .playlist, .transition], id: \.self) { kind in
                     EntityIcon(kind: kind, size: size)
                         .frame(width: 90, alignment: .leading)
                 }
@@ -132,4 +122,3 @@ private extension EntityIcon.Kind {
     .preferredColorScheme(.dark)
 }
 
-extension EntityIcon.Kind: Hashable {}
