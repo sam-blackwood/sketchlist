@@ -40,6 +40,16 @@ final class Playlist {
     /// 0:48"). Mirrors the `notes` field on Track.
     var notes: String?
 
+    // MARK: Artwork
+
+    /// Filename of this playlist's cover art within
+    /// `~/Library/Application Support/SketchList/Covers/`, or `nil` for the
+    /// generated default (UI_DESIGN.md § Custom Cover Art).
+    ///
+    /// See `Setlist.artworkFilename` for the reasoning behind storing a filename
+    /// rather than image data or a description of how the art was made.
+    var artworkFilename: String?
+
     // MARK: Timestamps
 
     var createdAt: Date
@@ -59,6 +69,7 @@ final class Playlist {
         name: String,
         descriptionText: String? = nil,
         notes: String? = nil,
+        artworkFilename: String? = nil,
         createdAt: Date = .now,
         updatedAt: Date = .now
     ) {
@@ -66,6 +77,7 @@ final class Playlist {
         self.name = name
         self.descriptionText = descriptionText
         self.notes = notes
+        self.artworkFilename = artworkFilename
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
