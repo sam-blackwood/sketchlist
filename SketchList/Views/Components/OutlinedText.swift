@@ -157,11 +157,7 @@ private struct GlyphOutline: Shape {
                 OutlinedText(text: "You", style: .hero)
                 Text(" like").textStyle(.hero)
             }
-            HStack(alignment: .firstTextBaseline, spacing: 0) {
-                Text("to ").textStyle(.hero)
-                Text("build").textStyle(.hero).foregroundStyle(.appHot)
-                Text("?").textStyle(.hero)
-            }
+            Text("to build?").textStyle(.hero)
         }
     }
     .foregroundStyle(.appInk)
