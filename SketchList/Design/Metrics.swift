@@ -2,7 +2,7 @@
 //  Metrics.swift
 //  SketchList
 //
-//  Spacing, sizing, and line weights. Same rationale as the colour and type
+//  Spacing, sizing, and line weights. Same rationale as the color and type
 //  tokens: view code should never contain a bare number whose meaning has to be
 //  inferred from context.
 //
@@ -57,7 +57,19 @@ enum Metrics {
         static let track: CGFloat = 52
 
         /// A setlist / playlist / transition row in a list or on Home.
-        static let entity: CGFloat = 56
+        /// Sized around the artwork thumbnail plus its breathing room.
+        static let entity: CGFloat = 64
+
+        /// The cover art leading an entity row.
+        static let artwork: CGFloat = 36
+
+        /// The entity mark drawn inside default artwork, sized to leave the
+        /// square a visible margin rather than filling it edge to edge.
+        static let artworkGlyph: CGFloat = 22
+
+        /// Width reserved for the trailing "18 · 2h ago" column, so the counts
+        /// and dates line up down the list regardless of digit count.
+        static let recencyWidth: CGFloat = 124
 
         /// A compact row in the right-hand library pane.
         static let library: CGFloat = 44
