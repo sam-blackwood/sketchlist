@@ -12,7 +12,7 @@
 //    On hover  the block fills acid, ink and icon invert to black
 //
 //  The three are deliberately monochrome and are told apart by icon and label
-//  rather than by colour. Colour on Home lives in the headline and the recents
+//  rather than by color. Color on Home lives in the headline and the recents
 //  swatches, which leaves acid free to mean one thing app-wide: selected.
 //
 
@@ -25,8 +25,8 @@ struct CreationButton: View {
     /// The thing being created, e.g. "Setlist".
     let title: String
 
-    /// Which entity mark to draw. See `EntityIcon`.
-    let icon: EntityIcon.Kind
+    /// Which entity this button creates. Drives the mark via `EntityIcon`.
+    let icon: EntityKind
 
     let action: () -> Void
 
