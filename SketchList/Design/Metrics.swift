@@ -74,6 +74,11 @@ enum Metrics {
         /// A compact row in the right-hand library pane.
         static let library: CGFloat = 44
 
+        /// A sidebar destination. Shorter than any content row because the
+        /// sidebar is set in the 11pt mono voice, not the display face — a
+        /// 44pt row around 11pt type reads as padding rather than as a list.
+        static let nav: CGFloat = 32
+
         /// Width reserved for the position numeral column.
         static let numeralWidth: CGFloat = 44
 
