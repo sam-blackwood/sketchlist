@@ -160,6 +160,20 @@ extension TextStyle {
     /// Metadata beneath a row title — artist, BPM, duration.
     static let meta = TextStyle(size: 11, design: .monospaced)
 
+    /// Sidebar destinations.
+    ///
+    /// 11pt because that is the size the mono voice already uses for *words* —
+    /// `meta` is an artist name, while `numeric` at 12 carries monospaced digits
+    /// and exists for figures. Sidebar labels are words, so this shares `meta`'s
+    /// size rather than introducing a fourth mono step.
+    ///
+    /// Tracked and uppercased like `label`, but one size up, because the group
+    /// headers above these rows *are* `label`: at a shared 9.5 the heading and
+    /// the destination under it become indistinguishable and only color
+    /// separates them. 13pt was rejected — it is `body`'s number in the other
+    /// face, and reusing it would make "13" mean two unrelated things.
+    static let nav = TextStyle(size: 11, design: .monospaced, tracking: 2, textCase: .uppercase)
+
     /// Numeric readouts that must align in a column: BPM, scores, timecodes.
     static let numeric = TextStyle(size: 12, design: .monospaced, monospacedDigits: true)
 
@@ -195,6 +209,7 @@ extension View {
         Text("Jump back in").textStyle(.title)
         Text("Nightdrive").textStyle(.rowTitle)
         Text("Compatible with 06").textStyle(.label).foregroundStyle(.appInkFaint)
+        Text("Transitions").textStyle(.nav).foregroundStyle(.appInkDim)
         Text("Kolter · 124.0 BPM").textStyle(.meta).foregroundStyle(.appInkDim)
         Text("128.5").textStyle(.numeric).foregroundStyle(.appInkDim)
         Text("Slow burn into the 5am stretch.").textStyle(.body).foregroundStyle(.appInkDim)
