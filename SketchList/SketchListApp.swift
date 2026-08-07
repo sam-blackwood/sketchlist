@@ -24,7 +24,14 @@ struct SketchListApp: App {
         WindowGroup {
             ContentView()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color("AppBackground"))
+                .background(Color.appBackground)
+                // Temporary. UI_DESIGN.md calls for light and dark as
+                // first-class, both designed rather than one derived from the
+                // other — but the light values in the Asset Catalog are
+                // placeholders nobody has looked at, so following the system
+                // appearance currently ships a palette that was never designed.
+                // Remove this line once light mode exists.
+                .preferredColorScheme(.dark)
         }
         .modelContainer(modelContainer)
     }
