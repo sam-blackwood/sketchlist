@@ -6,10 +6,10 @@
 //  (UI_DESIGN.md § Overall Layout).
 //
 //  `NavigationSplitView` rather than a hand-rolled `HStack` so the panel gets
-//  the platform behaviour for free: the ⌘0 toggle, the toolbar control, drag to
+//  the platform behavior for free: the ⌘0 toggle, the toolbar control, drag to
 //  resize, and the system's own hide/show animation. On macOS this hides the
 //  sidebar outright rather than collapsing it to an icon rail, which is the
-//  behaviour we want — a rail would make marks mandatory and rule out the quiet
+//  behavior we want — a rail would make marks mandatory and rule out the quiet
 //  mono direction entirely.
 //
 //  Only Home is real. Every other destination is a `PlaceholderScreen` until its
