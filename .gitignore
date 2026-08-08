@@ -2,6 +2,14 @@
 SYSTEM_DESIGN.md
 UI_DESIGN.md
 
+# ── Design prototypes (kept local, not committed) ──
+# Throwaway HTML used to compare visual directions before anything is written in
+# Swift. Same category as the docs above — UI_DESIGN.md cites these files as the
+# reference for settled decisions, and both are local-only, so they stay
+# consistent. Ignored as a directory rather than as *.html: narrower, and it
+# won't silently swallow a real HTML file later.
+Design/
+
 # ── Local-only scratch tooling (realistic sample library + eyeball tests); not shipped ──
 SketchListTests/Scratch/
 
